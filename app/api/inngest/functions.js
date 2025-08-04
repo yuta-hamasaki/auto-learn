@@ -14,8 +14,11 @@ export const CreateNewUser = inngest.createFunction(
   {id: "create-user"},
   {event: "user.create"},
   async({event, step}) => {
+    const { user } = event.data;  
     // get event data
-    const result = await step.run('Check User and create New if Not in DB', async()=>{      // check if user exists or not
+    const result = await step.run('Check User and create New if Not in DB', 
+      async()=>{    
+          // check if user exists
           const result = await db.select().from(USER_TABLE)
           .where(eq(USER_TABLE.email, user?.primaryEmailAddress?.emailAddress))
       
@@ -26,7 +29,10 @@ export const CreateNewUser = inngest.createFunction(
               userName:  user?.fullName,
               email: user?.primaryEmailAddress?.emailAddress
             }).returning({id: USER_TABLE.id})
+            return userResp
           }
+
+          return result
         })
         return "Success"
   },
