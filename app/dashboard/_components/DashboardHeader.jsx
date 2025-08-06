@@ -1,9 +1,9 @@
-import React from 'react'
+import { UserButton } from '@clerk/nextjs'
 
 export default function DashboardHeader() {
   return (
-    <div>
-      header
+    <div className='p-5 shadow-md flex justify-end'>
+      <UserButton/>
     </div>
   )
 }

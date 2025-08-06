@@ -1,8 +1,8 @@
-
+import WelcomeBanner from './_components/WelcomeBanner'
 export default function page() {
   return (
-    <div>
-      Dashboard
+    <div className=''>
+      <WelcomeBanner/>
     </div>
   )
 }
