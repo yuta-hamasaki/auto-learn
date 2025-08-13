@@ -1,43 +1,43 @@
-"use client"
-// import {USER_TABLE} from "@/configs/schema"
-// import {db} from "@/configs/db"
-// import {eq} from "drizzle-orm"
-import { useUser } from '@clerk/nextjs';
-import React, { useEffect } from 'react';
-import axios from 'axios';
+"use client";
 
+import { db } from "../configs/db";
+import { USER_TABLE } from "../configs/schema";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+import { eq } from "drizzle-orm";
+import React, { useEffect } from "react";
 
-export default function Provider({ children }) {
+function Provider({ children }) {
+  const { user } = useUser();
 
-  const {user} = useUser()
+  useEffect(() => {
+    if (user) {
+      CheckIsNewUser();
+    }
+  }, []);
 
-    useEffect(()=>{
-      user&&CheckIsNewUser()
-    },[user])
+  const CheckIsNewUser = async () => {
+    const result = await db
+      .select()
+      .from(USER_TABLE)
+      .where(eq(USER_TABLE.email, user?.primaryEmailAddress?.emailAddress));
+    console.log(result);
+    if (result?.length == 0) {
+      const userResp = await db
+        .insert(USER_TABLE)
+        .values({
+          name: user?.fullName,
+          email: user?.primaryEmailAddress?.emailAddress,
+        })
+        .returning({ id: USER_TABLE.id });
+      console.log(userResp);
+    }
 
+    const resp = await axios.post('/app/api/create-user', {user: user})
+    console.log(resp.data)
 
-  const CheckIsNewUser= async()=>{
-    // const result = await db.select().from(USER_TABLE)
-    // .where(eq(USER_TABLE.email, user?.primaryEmailAddress?.emailAddress))
-
-    // console.log(result)
-
-    // if(result?.length == 0){
-    //   const userResp = await db.insert(USER_TABLE).values({
-    //     userName:  user?.fullName,
-    //     email: user?.primaryEmailAddress?.emailAddress
-    //   }).returning({id: USER_TABLE.id})
-
-    //   console.log(userResp)
-    // }
-
-    const res = await axios.post('/api/create-user', { user: user})
-
-    console.log(res.data)
-  }
-  return (
-    <div> 
-      {children}
-    </div>
-  )
+  };
+  return <div>{children}</div>;
 }
+
+export default Provider;
