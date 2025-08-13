@@ -36,9 +36,11 @@ export default function SideBar() {
       </div>
 
       <div className="mt-10">
-        <Button
-        className='w-full bg-blue-500 text-white'
-        >+ 新規作成</Button>
+        <Link href={`/create`} className='w-full'>
+          <Button className='w-full bg-blue-500 text-white'
+        >+ 新規作成
+          </Button>
+        </Link>
 
         <div className='mt-3'>
           {MenuList.map((menu, index)=>(

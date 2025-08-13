@@ -1,7 +1,6 @@
 "use client"
 import React, {useState} from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 
 export default function SelectOption({ selectedStudyType }) {
   const Options = [
@@ -42,7 +41,6 @@ export default function SelectOption({ selectedStudyType }) {
               selectedStudyType(option.name);
             }}
           >
-            {/* aspect-ratioを使用して正方形のコンテナを作成 */}
             <div className="w-30 aspect-square relative mb-3 flex items-center justify-center bg-gray-50 rounded-lg"
             >
               <Image 
