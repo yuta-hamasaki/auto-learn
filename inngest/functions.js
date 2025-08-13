@@ -124,11 +124,13 @@ Give me in .md format
 **IMPORTANT**
 There should be an emoji
 Give me in .md format
+This should be written in Japanese
 
 
 
  7. **Additional Notes:**  
    - **IMPORTANT** There should be an emoji
+   - **IMPORTANT** This should be written in Japanese
    - Every Content should be in detail and explained properly
    - Each 'content' field should use simple and concise language suitable for study notes.  
    - Ensure that topics include clear definitions, key points, and, where appropriate, examples or sample code.  
